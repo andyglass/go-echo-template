@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"os"
+	"go-echo-template/config"
 
 	"github.com/sirupsen/logrus"
 )
@@ -13,11 +13,11 @@ var Log = getLogger()
 func getLogger() *logrus.Logger {
 	logger := logrus.New()
 
-	switch os.Getenv("APP_LOG_LEVEL") {
+	switch config.Cfg.LogLevel {
 	case "debug", "5":
 		logger.SetLevel(logrus.DebugLevel)
 	case "info", "4":
-		logger.SetLevel(logrus.WarnLevel)
+		logger.SetLevel(logrus.InfoLevel)
 	case "warn", "3":
 		logger.SetLevel(logrus.WarnLevel)
 	case "error", "2":

@@ -18,11 +18,9 @@ type Server struct {
 
 // NewServer constructor
 func NewServer() *Server {
-	cfg := config.Get()
-
 	return &Server{
 		Router: GetRouter(),
-		Cfg:    cfg,
+		Cfg:    config.Cfg,
 	}
 }
 

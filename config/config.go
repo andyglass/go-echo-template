@@ -1,7 +1,6 @@
 package config
 
 import (
-	"go-echo-template/logger"
 	"time"
 
 	"github.com/kelseyhightower/envconfig"
@@ -9,7 +8,8 @@ import (
 
 var (
 	// Cfg app global
-	Cfg *Config
+	// Cfg *Config
+	Cfg = Get()
 )
 
 // Config structure
@@ -20,6 +20,7 @@ type Config struct {
 	ServerPort    string        `envconfig:"APP_SERVER_PORT" default:"8000"`
 	ReadTimeout   time.Duration `envconfig:"APP_SERVER_READ_TIMEOUT" default:"60s"`
 	WriteTimeout  time.Duration `envconfig:"APP_SERVER_WRITE_TIMEOUT" default:"60s"`
+	LogLevel      string        `envconfig:"APP_LOG_LEVEL" default:"info"`
 	SentryDSN     string        `envconfig:"APP_SENTRY_DSN" default:""`
 	DBConnStr     string        `envconfig:"APP_DATABASE_DSN"`
 	RunMigrations bool          `envconfig:"APP_DATABASE_RUN_MIGRATIONS" default:"true"`
@@ -30,7 +31,7 @@ func Get() *Config {
 	cfg := &Config{}
 
 	if err := envconfig.Process("", cfg); err != nil {
-		logger.Log.Fatal(err)
+		panic(err)
 	}
 
 	return cfg
